@@ -235,6 +235,78 @@ When converting a YAML/JSON template to go, the intrinsic 'Ref' function as impl
 
 If a reference is not a pseudo parameter, GoFormation will try to resolve it within the AWS CloudFormation template. **Currently, this implementation only searches for `Parameters` with a name that matches the ref, and returns the `Default` if it has one.**
 
+#### Using Conditions
+
+When creating a YAML/JSON template in go, by default any Conditions using intrinsic functions will be evaluated at compile time. Additionally, any resources using the Condition will be replaced with the condition. Therefore, you should pass in the `NoEvaluateConditions` option when converting the go struct to JSON/YAML.
+
+```go
+package main 
+
+import (
+	"fmt"	
+    "strconv"
+	"time"
+
+	"github.com/awslabs/goformation/cloudformation"
+	"github.com/awslabs/goformation/cloudformation/resources"
+    "github.com/awslabs/goformation/intrinsics"
+)
+
+func main(){
+    template := cloudformation.NewTemplate()
+
+    // Create Parameter
+    template.Parameters["Environment"] = &struct{
+        Type            string
+        Description     string
+        Default         string
+        AllowedValues   []string
+    }{
+        Type: "String",
+        Description: "My Environment",
+        Default: "Development",
+        AllowedValues: []string{"Development", "Production"},
+    }
+
+    // Create Condition dependent on Parameter
+    template.Conditions["Production"] = cloudformation.Equals(cloudformation.Ref("Environment"), "Production")
+
+    // Create an Amazon SNS topic, with a unique name based off the current timestamp
+    template.Resources["MyTopic"] = &resources.AWSSNSTopic{
+        TopicName: "my-topic-" + strconv.FormatInt(time.Now().Unix(), 10),
+    }
+
+    // Create a conditional subscription, connected to our topic, that forwards notifications to an email address
+    conditionalSubscription := &resources.AWSSNSSubscription{
+       TopicArn: cloudformation.Ref("MyTopic"),
+       Protocol: "email",
+       Endpoint: "some.email@example.com",
+   }
+    conditionalSubscription.SetResourceCondition("Production")
+    
+    template.Resources["MyTopicSubscription"] = conditionalSubscription
+
+    // Let's see the JSON AWS CloudFormation template
+    options := &intrinsics.ProcessorOptions{
+        NoEvaluateConditions:true,
+    }
+
+    j, err := template.JSONWithOptions(options)
+    if err != nil {
+        fmt.Printf("Failed to generate JSON: %s\n", err)
+    } else {
+        fmt.Printf("%s\n", string(j))
+    }
+
+    // and also the YAML AWS CloudFormation template
+    y, err := template.YAMLWithOptions(options)
+    if err != nil {
+        fmt.Printf("Failed to generate YAML: %s\n", err)
+    } else {
+        fmt.Printf("%s\n", string(y))
+    }
+}
+```
 
 ## Versioning
 
