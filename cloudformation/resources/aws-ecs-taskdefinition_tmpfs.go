@@ -17,9 +17,9 @@ type AWSECSTaskDefinition_Tmpfs struct {
 	MountOptions []string `json:"MountOptions,omitempty"`
 
 	// Size AWS CloudFormation Property
-	// Required: false
+	// Required: true
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-taskdefinition-tmpfs.html#cfn-ecs-taskdefinition-tmpfs-size
-	Size int `json:"Size,omitempty"`
+	Size int `json:"Size"`
 
 	// _deletionPolicy represents a CloudFormation DeletionPolicy
 	_deletionPolicy policies.DeletionPolicy
@@ -29,11 +29,24 @@ type AWSECSTaskDefinition_Tmpfs struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSECSTaskDefinition_Tmpfs) AWSCloudFormationType() string {
 	return "AWS::ECS::TaskDefinition.Tmpfs"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSECSTaskDefinition_Tmpfs) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSECSTaskDefinition_Tmpfs) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

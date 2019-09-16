@@ -19,11 +19,24 @@ type AWSKinesisAnalyticsApplication_InputParallelism struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSKinesisAnalyticsApplication_InputParallelism) AWSCloudFormationType() string {
 	return "AWS::KinesisAnalytics::Application.InputParallelism"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsApplication_InputParallelism) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsApplication_InputParallelism) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

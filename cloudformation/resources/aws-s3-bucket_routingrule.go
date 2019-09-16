@@ -24,11 +24,24 @@ type AWSS3Bucket_RoutingRule struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSS3Bucket_RoutingRule) AWSCloudFormationType() string {
 	return "AWS::S3::Bucket.RoutingRule"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSS3Bucket_RoutingRule) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSS3Bucket_RoutingRule) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

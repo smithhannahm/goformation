@@ -24,11 +24,24 @@ type AWSKinesisAnalyticsV2ApplicationReferenceDataSource_S3ReferenceDataSource s
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSKinesisAnalyticsV2ApplicationReferenceDataSource_S3ReferenceDataSource) AWSCloudFormationType() string {
 	return "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource.S3ReferenceDataSource"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2ApplicationReferenceDataSource_S3ReferenceDataSource) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2ApplicationReferenceDataSource_S3ReferenceDataSource) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

@@ -19,11 +19,24 @@ type AWSKinesisFirehoseDeliveryStream_HiveJsonSerDe struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSKinesisFirehoseDeliveryStream_HiveJsonSerDe) AWSCloudFormationType() string {
 	return "AWS::KinesisFirehose::DeliveryStream.HiveJsonSerDe"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisFirehoseDeliveryStream_HiveJsonSerDe) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisFirehoseDeliveryStream_HiveJsonSerDe) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

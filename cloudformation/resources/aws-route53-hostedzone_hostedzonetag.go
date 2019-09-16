@@ -24,11 +24,24 @@ type AWSRoute53HostedZone_HostedZoneTag struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSRoute53HostedZone_HostedZoneTag) AWSCloudFormationType() string {
 	return "AWS::Route53::HostedZone.HostedZoneTag"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSRoute53HostedZone_HostedZoneTag) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSRoute53HostedZone_HostedZoneTag) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

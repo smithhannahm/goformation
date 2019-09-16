@@ -34,7 +34,7 @@ type AWSCognitoUserPool_PasswordPolicy struct {
 	// TemporaryPasswordValidityDays AWS CloudFormation Property
 	// Required: false
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpool-passwordpolicy.html#cfn-cognito-userpool-passwordpolicy-temporarypasswordvaliditydays
-	TemporaryPasswordValidityDays float64 `json:"TemporaryPasswordValidityDays,omitempty"`
+	TemporaryPasswordValidityDays int `json:"TemporaryPasswordValidityDays,omitempty"`
 
 	// _deletionPolicy represents a CloudFormation DeletionPolicy
 	_deletionPolicy policies.DeletionPolicy
@@ -44,11 +44,24 @@ type AWSCognitoUserPool_PasswordPolicy struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSCognitoUserPool_PasswordPolicy) AWSCloudFormationType() string {
 	return "AWS::Cognito::UserPool.PasswordPolicy"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCognitoUserPool_PasswordPolicy) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCognitoUserPool_PasswordPolicy) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

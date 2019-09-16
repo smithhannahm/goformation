@@ -34,11 +34,24 @@ type AWSServiceCatalogCloudFormationProduct_ProvisioningArtifactProperties struc
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSServiceCatalogCloudFormationProduct_ProvisioningArtifactProperties) AWSCloudFormationType() string {
 	return "AWS::ServiceCatalog::CloudFormationProduct.ProvisioningArtifactProperties"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServiceCatalogCloudFormationProduct_ProvisioningArtifactProperties) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServiceCatalogCloudFormationProduct_ProvisioningArtifactProperties) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

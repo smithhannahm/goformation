@@ -16,6 +16,11 @@ type AWSAppMeshRoute_HttpRoute struct {
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appmesh-route-httproute.html#cfn-appmesh-route-httproute-match
 	Match *AWSAppMeshRoute_HttpRouteMatch `json:"Match,omitempty"`
 
+	// RetryPolicy AWS CloudFormation Property
+	// Required: false
+	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appmesh-route-httproute.html#cfn-appmesh-route-httproute-retrypolicy
+	RetryPolicy *AWSAppMeshRoute_HttpRetryPolicy `json:"RetryPolicy,omitempty"`
+
 	// _deletionPolicy represents a CloudFormation DeletionPolicy
 	_deletionPolicy policies.DeletionPolicy
 
@@ -24,11 +29,24 @@ type AWSAppMeshRoute_HttpRoute struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSAppMeshRoute_HttpRoute) AWSCloudFormationType() string {
 	return "AWS::AppMesh::Route.HttpRoute"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAppMeshRoute_HttpRoute) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAppMeshRoute_HttpRoute) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

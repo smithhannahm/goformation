@@ -39,11 +39,24 @@ type AWSAutoScalingPlansScalingPlan_CustomizedScalingMetricSpecification struct 
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSAutoScalingPlansScalingPlan_CustomizedScalingMetricSpecification) AWSCloudFormationType() string {
 	return "AWS::AutoScalingPlans::ScalingPlan.CustomizedScalingMetricSpecification"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAutoScalingPlansScalingPlan_CustomizedScalingMetricSpecification) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAutoScalingPlansScalingPlan_CustomizedScalingMetricSpecification) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

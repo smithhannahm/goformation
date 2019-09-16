@@ -29,11 +29,24 @@ type AWSGlueConnection_PhysicalConnectionRequirements struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSGlueConnection_PhysicalConnectionRequirements) AWSCloudFormationType() string {
 	return "AWS::Glue::Connection.PhysicalConnectionRequirements"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSGlueConnection_PhysicalConnectionRequirements) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSGlueConnection_PhysicalConnectionRequirements) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

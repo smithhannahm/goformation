@@ -29,11 +29,24 @@ type AWSAutoScalingAutoScalingGroup_TagProperty struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSAutoScalingAutoScalingGroup_TagProperty) AWSCloudFormationType() string {
 	return "AWS::AutoScaling::AutoScalingGroup.TagProperty"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAutoScalingAutoScalingGroup_TagProperty) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSAutoScalingAutoScalingGroup_TagProperty) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

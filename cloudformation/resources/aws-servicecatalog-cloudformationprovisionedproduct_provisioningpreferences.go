@@ -49,11 +49,24 @@ type AWSServiceCatalogCloudFormationProvisionedProduct_ProvisioningPreferences s
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSServiceCatalogCloudFormationProvisionedProduct_ProvisioningPreferences) AWSCloudFormationType() string {
 	return "AWS::ServiceCatalog::CloudFormationProvisionedProduct.ProvisioningPreferences"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServiceCatalogCloudFormationProvisionedProduct_ProvisioningPreferences) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServiceCatalogCloudFormationProvisionedProduct_ProvisioningPreferences) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

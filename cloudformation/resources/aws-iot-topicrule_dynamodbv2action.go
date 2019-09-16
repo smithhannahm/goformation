@@ -24,11 +24,24 @@ type AWSIoTTopicRule_DynamoDBv2Action struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSIoTTopicRule_DynamoDBv2Action) AWSCloudFormationType() string {
 	return "AWS::IoT::TopicRule.DynamoDBv2Action"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSIoTTopicRule_DynamoDBv2Action) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSIoTTopicRule_DynamoDBv2Action) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

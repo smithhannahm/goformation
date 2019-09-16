@@ -19,11 +19,24 @@ type AWSKinesisAnalyticsV2ApplicationOutput_DestinationSchema struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSKinesisAnalyticsV2ApplicationOutput_DestinationSchema) AWSCloudFormationType() string {
 	return "AWS::KinesisAnalyticsV2::ApplicationOutput.DestinationSchema"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2ApplicationOutput_DestinationSchema) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2ApplicationOutput_DestinationSchema) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

@@ -29,11 +29,24 @@ type AWSIoTAnalyticsPipeline_SelectAttributes struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSIoTAnalyticsPipeline_SelectAttributes) AWSCloudFormationType() string {
 	return "AWS::IoTAnalytics::Pipeline.SelectAttributes"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSIoTAnalyticsPipeline_SelectAttributes) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSIoTAnalyticsPipeline_SelectAttributes) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

@@ -19,11 +19,24 @@ type AWSGreengrassFunctionDefinition_DefaultConfig struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSGreengrassFunctionDefinition_DefaultConfig) AWSCloudFormationType() string {
 	return "AWS::Greengrass::FunctionDefinition.DefaultConfig"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSGreengrassFunctionDefinition_DefaultConfig) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSGreengrassFunctionDefinition_DefaultConfig) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

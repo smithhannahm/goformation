@@ -19,11 +19,24 @@ type AWSKinesisAnalyticsV2Application_ApplicationSnapshotConfiguration struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSKinesisAnalyticsV2Application_ApplicationSnapshotConfiguration) AWSCloudFormationType() string {
 	return "AWS::KinesisAnalyticsV2::Application.ApplicationSnapshotConfiguration"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2Application_ApplicationSnapshotConfiguration) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSKinesisAnalyticsV2Application_ApplicationSnapshotConfiguration) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

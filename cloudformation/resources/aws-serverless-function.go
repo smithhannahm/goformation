@@ -124,11 +124,24 @@ type AWSServerlessFunction struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSServerlessFunction) AWSCloudFormationType() string {
 	return "AWS::Serverless::Function"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServerlessFunction) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSServerlessFunction) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.
@@ -174,12 +187,14 @@ func (r AWSServerlessFunction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type           string
 		Properties     Properties
+		Condition      string                  `json:"Condition,omitempty"`
 		DependsOn      []string                `json:"DependsOn,omitempty"`
 		Metadata       map[string]interface{}  `json:"Metadata,omitempty"`
 		DeletionPolicy policies.DeletionPolicy `json:"DeletionPolicy,omitempty"`
 	}{
 		Type:           r.AWSCloudFormationType(),
 		Properties:     (Properties)(r),
+		Condition:      r._resourceCondition,
 		DependsOn:      r._dependsOn,
 		Metadata:       r._metadata,
 		DeletionPolicy: r._deletionPolicy,
@@ -193,6 +208,7 @@ func (r *AWSServerlessFunction) UnmarshalJSON(b []byte) error {
 	res := &struct {
 		Type           string
 		Properties     *Properties
+		Condition      string
 		DependsOn      []string
 		Metadata       map[string]interface{}
 		DeletionPolicy string
@@ -209,6 +225,9 @@ func (r *AWSServerlessFunction) UnmarshalJSON(b []byte) error {
 	// If the resource has no Properties set, it could be nil
 	if res.Properties != nil {
 		*r = AWSServerlessFunction(*res.Properties)
+	}
+	if res.Condition != "" {
+		r._resourceCondition = res.Condition
 	}
 	if res.DependsOn != nil {
 		r._dependsOn = res.DependsOn

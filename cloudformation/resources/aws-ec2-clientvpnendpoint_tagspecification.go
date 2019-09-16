@@ -7,12 +7,12 @@ import "github.com/awslabs/goformation/cloudformation/policies"
 type AWSEC2ClientVpnEndpoint_TagSpecification struct {
 
 	// ResourceType AWS CloudFormation Property
-	// Required: false
+	// Required: true
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-clientvpnendpoint-tagspecification.html#cfn-ec2-clientvpnendpoint-tagspecification-resourcetype
 	ResourceType string `json:"ResourceType,omitempty"`
 
 	// Tags AWS CloudFormation Property
-	// Required: false
+	// Required: true
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-clientvpnendpoint-tagspecification.html#cfn-ec2-clientvpnendpoint-tagspecification-tags
 	Tags []Tag `json:"Tags,omitempty"`
 
@@ -24,11 +24,24 @@ type AWSEC2ClientVpnEndpoint_TagSpecification struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSEC2ClientVpnEndpoint_TagSpecification) AWSCloudFormationType() string {
 	return "AWS::EC2::ClientVpnEndpoint.TagSpecification"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSEC2ClientVpnEndpoint_TagSpecification) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSEC2ClientVpnEndpoint_TagSpecification) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

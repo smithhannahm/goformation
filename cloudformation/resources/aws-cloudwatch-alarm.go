@@ -97,9 +97,14 @@ type AWSCloudWatchAlarm struct {
 	Statistic string `json:"Statistic,omitempty"`
 
 	// Threshold AWS CloudFormation Property
-	// Required: true
+	// Required: false
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-threshold
-	Threshold float64 `json:"Threshold"`
+	Threshold float64 `json:"Threshold,omitempty"`
+
+	// ThresholdMetricId AWS CloudFormation Property
+	// Required: false
+	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-dynamic-threshold
+	ThresholdMetricId string `json:"ThresholdMetricId,omitempty"`
 
 	// TreatMissingData AWS CloudFormation Property
 	// Required: false
@@ -119,11 +124,24 @@ type AWSCloudWatchAlarm struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSCloudWatchAlarm) AWSCloudFormationType() string {
 	return "AWS::CloudWatch::Alarm"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCloudWatchAlarm) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCloudWatchAlarm) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.
@@ -169,12 +187,14 @@ func (r AWSCloudWatchAlarm) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type           string
 		Properties     Properties
+		Condition      string                  `json:"Condition,omitempty"`
 		DependsOn      []string                `json:"DependsOn,omitempty"`
 		Metadata       map[string]interface{}  `json:"Metadata,omitempty"`
 		DeletionPolicy policies.DeletionPolicy `json:"DeletionPolicy,omitempty"`
 	}{
 		Type:           r.AWSCloudFormationType(),
 		Properties:     (Properties)(r),
+		Condition:      r._resourceCondition,
 		DependsOn:      r._dependsOn,
 		Metadata:       r._metadata,
 		DeletionPolicy: r._deletionPolicy,
@@ -188,6 +208,7 @@ func (r *AWSCloudWatchAlarm) UnmarshalJSON(b []byte) error {
 	res := &struct {
 		Type           string
 		Properties     *Properties
+		Condition      string
 		DependsOn      []string
 		Metadata       map[string]interface{}
 		DeletionPolicy string
@@ -204,6 +225,9 @@ func (r *AWSCloudWatchAlarm) UnmarshalJSON(b []byte) error {
 	// If the resource has no Properties set, it could be nil
 	if res.Properties != nil {
 		*r = AWSCloudWatchAlarm(*res.Properties)
+	}
+	if res.Condition != "" {
+		r._resourceCondition = res.Condition
 	}
 	if res.DependsOn != nil {
 		r._dependsOn = res.DependsOn

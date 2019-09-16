@@ -19,7 +19,7 @@ type AWSCognitoUserPool_AdminCreateUserConfig struct {
 	// UnusedAccountValidityDays AWS CloudFormation Property
 	// Required: false
 	// See: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpool-admincreateuserconfig.html#cfn-cognito-userpool-admincreateuserconfig-unusedaccountvaliditydays
-	UnusedAccountValidityDays float64 `json:"UnusedAccountValidityDays,omitempty"`
+	UnusedAccountValidityDays int `json:"UnusedAccountValidityDays,omitempty"`
 
 	// _deletionPolicy represents a CloudFormation DeletionPolicy
 	_deletionPolicy policies.DeletionPolicy
@@ -29,11 +29,24 @@ type AWSCognitoUserPool_AdminCreateUserConfig struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSCognitoUserPool_AdminCreateUserConfig) AWSCloudFormationType() string {
 	return "AWS::Cognito::UserPool.AdminCreateUserConfig"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCognitoUserPool_AdminCreateUserConfig) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSCognitoUserPool_AdminCreateUserConfig) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.

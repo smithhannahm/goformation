@@ -24,11 +24,24 @@ type AWSStepFunctionsStateMachine_TagsEntry struct {
 
 	// _metadata stores structured data associated with this resource
 	_metadata map[string]interface{}
+
+	// _resourceCondition stores the logical ID of the condition that must be satisfied for this resource to be created
+	_resourceCondition string
 }
 
 // AWSCloudFormationType returns the AWS CloudFormation resource type
 func (r *AWSStepFunctionsStateMachine_TagsEntry) AWSCloudFormationType() string {
 	return "AWS::StepFunctions::StateMachine.TagsEntry"
+}
+
+// Condition returns the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSStepFunctionsStateMachine_TagsEntry) ResourceCondition() string {
+	return r._resourceCondition
+}
+
+// SetCondition specifies the logical ID of the condition that must be satisfied for this resource to be created
+func (r *AWSStepFunctionsStateMachine_TagsEntry) SetResourceCondition(condition string) {
+	r._resourceCondition = condition
 }
 
 // DependsOn returns a slice of logical ID names this resource depends on.
