@@ -99,6 +99,22 @@ var _ = Describe("Resource", func() {
 
 			})
 
+			Context("with a condition", func() {
+				resource := resources.AWSEC2Instance{
+					ImageId: "ami-0123456789",
+				}
+				resource.SetResourceCondition("MyCondition")
+
+				expected := []byte(`{"Type":"AWS::EC2::Instance","Properties":{"ImageId":"ami-0123456789"},"Condition":"MyCondition"}`)
+
+				result, err := json.Marshal(resource)
+				It("should marshal to JSON successfully", func() {
+					Expect(result).To(Equal(expected))
+					Expect(err).To(BeNil())
+				})
+
+			})
+
 		})
 
 		Context("specified as JSON", func() {
@@ -135,6 +151,21 @@ var _ = Describe("Resource", func() {
 					Expect(err).To(BeNil())
 				})
 
+			})
+
+			Context("with a condition", func() {
+				property := []byte(`{"Type":"AWS::EC2::Instance","Properties":{"ImageId":"ami-0123456789"},"Condition":"MyCondition"}`)
+				expected := &resources.AWSEC2Instance{
+					ImageId: "ami-0123456789",
+				}
+				expected.SetResourceCondition("MyCondition")
+
+				result := &resources.AWSEC2Instance{}
+				err := json.Unmarshal(property, result)
+				It("should unmarshal to a Go struct successfully", func() {
+					Expect(result).To(Equal(expected))
+					Expect(err).To(BeNil())
+				})
 			})
 
 		})
